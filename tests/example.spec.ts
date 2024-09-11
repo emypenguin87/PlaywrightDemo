@@ -34,8 +34,20 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 
 //Your test goes here:
 
-
-
+test('Pokemon Test', async ({ request }) => {
+  const Pokemon = await request.get('https://pokeapi.co/api/v2/pokemon/charmeleon',{headers:{'Content-Type':'application/json',}})
+  expect(Pokemon.ok()).toBeTruthy();
+  if (Pokemon.ok()) {
+    console.log(Pokemon.json);
+    const data = await Pokemon.json();
+    // Assuming the response is a JSON object and you want to find a specific element
+    const element = data.find((item: { id: string; }) => item.id === 'abilities');
+    console.log(element);
+  } else {
+    console.error('Failed to fetch data:', Pokemon.status());
+  }
+  });
+  
 
 
 
