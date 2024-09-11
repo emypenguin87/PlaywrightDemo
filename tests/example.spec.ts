@@ -33,6 +33,37 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 });
 
 //Your test goes here:
+test('I can log into to swaglabs site', async ({ page }) => {
+  await page.goto('https://saucedemo.com/');
+
+  await page.locator('[class="login_logo"]').isVisible();
+
+  //HINT Here we are using the "id" attribute of an element to locate it, sometimes you may need to use other attributes eg line 23 uses src
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+  await page.locator('[id="login-button"]').click();
+
+  await expect(page.locator('[data-test="title"]')).toBeVisible();
+
+
+});
+
+
+//Your test goes here:
+test('Call pokemon endpoint', async ({ page }) => {
+  await page.goto('https://pokeapi.co/api/v2/pokemon/charmeleon');
+
+});
+
+
+  test('Call endpoint', async ({ request }) => {
+    const newIssue = await request.get(`https://pokeapi.co/api/v2/pokemon/charmeleon`);
+    expect(newIssue.ok()).toBeTruthy();
+     expect(await newIssue.json()).toContainEqual(expect.objectContaining({
+       abilities: expect.()
+     }));
+     expect
+  });
 
 
 
