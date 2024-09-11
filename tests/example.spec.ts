@@ -34,6 +34,43 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 
 //Your test goes here:
 
+test('I can login to Swab Labs', async ({ page }) => {
+  await page.goto('https://saucedemo.com')
+
+    await page.locator('[id="user-name"]').fill("standard_user");
+    await page.locator('[id="password"]').fill("secret_sauce");
+    await page.locator('[id="login-button"]').click();
+
+    await page.waitForURL('https://www.saucedemo.com/inventory.html')
+  
+    await expect(page.locator('[data-test="inventory-container"]')).toBeVisible();
+})
+
+test('I cant login to Swab Labs', async ({ page }) => {
+  await page.goto('https://saucedemo.com')
+
+    await page.locator('[id="user-name"]').fill("locked_out_user");
+    await page.locator('[id="password"]').fill("secret_sauce");
+    await page.locator('[id="login-button"]').click();
+  
+    await expect(page.locator('[data-test="error"]')).toBeVisible()
+})
+
+test('I can get info on a pokemon', async ({ request }) => {
+  const response = await request.get('https://pokeapi.co/api/v2/pokemon/kakuna',
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+
+  const body = await response.json()
+  const abilities = body.abilities
+
+  expect(response.ok()).toBeTruthy()
+  expect(abilities[0].ability.name).toEqual('shed-skin')
+})
 
 
 
