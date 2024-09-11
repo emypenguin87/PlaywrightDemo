@@ -35,7 +35,26 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 //Your test goes here:
 
 
+test('I can log into Swag labs aaplication', async({ page }) => {
+  await page.goto('https://www.saucedemo.com/');
 
+  await page.locator('[class="login_logo"]').isVisible();
+
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+  await page.locator('[id="login-button"]').click();
+
+  await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
+
+})
+
+test('I can retrieve the pokemons abilities', async({ request }) => {
+  const charmeleon = await request.get("https://pokeapi.co/api/v2/pokemon/charmeleon");
+
+  expect(charmeleon.ok()).toBeTruthy();
+  const charmeleonJSON = await charmeleon.json();
+  expect(charmeleonJSON.abilities[0].ability.name).toEqual('blaze');
+})
 
 
 
