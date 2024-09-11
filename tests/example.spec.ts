@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, request } from '@playwright/test';
 
 test('has title', async ({ page }) => {
   await page.goto('https://playwright.dev/');
@@ -34,13 +34,28 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 
 //Your test goes here:
 
+test('I can log into to Swag Lab site', async ({ page }) => {
+  await page.goto('https://saucedemo.com/');
+
+  await page.locator('[class="login_logo"]').isVisible();
+
+  //HINT Here we are using the "id" attribute of an element to locate it, sometimes you may need to use other attributes eg line 23 uses src
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+  await page.locator('[id="login-button"]').click();
+
+  await expect(page.locator('[class="title"]')).toBeVisible();
+});
 
 
+test('API GET Rrequest #2', async ({request}) => {
+  const res = await request.get("http://pokeapi.co/api/v2/pokemon/charmeleon", {
+      headers: {
+          'Content-Type': "application/json"
+      }
+  });
+  const data = await res.json();
 
-
-
-
-
-
-
-
+  console.log("abilities:", data.abilities)
+  expect(res.status()).toBe(200)
+})
