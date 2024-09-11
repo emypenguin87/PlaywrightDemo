@@ -17,24 +17,32 @@ test('get started link', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
 
-test('I can log into to Applitools demo site', async ({ page }) => {
-  await page.goto('https://demo.applitools.com/');
+// test('I can log into to Applitools demo site', async ({ page }) => {
+//   await page.goto('https://demo.applitools.com/');
 
-  await page.locator('[src="img/logo-big.png"]').isVisible();
+//   await page.locator('[src="img/logo-big.png"]').isVisible();
 
-  //HINT Here we are using the "id" attribute of an element to locate it, sometimes you may need to use other attributes eg line 23 uses src
-  await page.locator('[id="username"]').fill("test");
-  await page.locator('[id="password"]').fill("test");
-  await page.locator('[id="log-in"]').click();
+//   //HINT Here we are using the "id" attribute of an element to locate it, sometimes you may need to use other attributes eg line 23 uses src
+//   await page.locator('[id="username"]').fill("test");
+//   await page.locator('[id="password"]').fill("test");
+//   await page.locator('[id="log-in"]').click();
 
-  await expect(page.locator('[id="time"]')).toBeVisible();
+//   await expect(page.locator('[id="time"]')).toBeVisible();
 
 
-});
+// });
 
 //Your test goes here:
 
+test('I can log into to Source Demo', async ({ page }) => {
+  await page.goto('https://saucedemo.com');
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+  await page.locator('[id="login-button"]').click();
 
+  await expect(page.locator('[id="item_4_title_link"]')).toBeVisible();
+
+});
 
 
 
