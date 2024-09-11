@@ -33,6 +33,39 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 });
 
 //Your test goes here:
+test('I can navigate into to url saucedemo.com ', async ({ page }) => {
+  await page.goto('https://saucedemo.com/');
+
+  //await page.locator('[src="img/logo-big.png"]').isVisible();
+
+  //HINT Here we are using the "id" attribute of an element to locate it, sometimes you may need to use other attributes eg line 23 uses src
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+  await page.locator('[id="login-button"]').click();
+
+  await expect(page.locator('[id="shopping_cart_container"]')).toBeVisible();
+
+
+});
+
+
+test('pokeamon test', async ({ request }) => {
+  //const newIssue = await request.post(`/repos/${USER}/${REPO}/issues`, {
+   // data: {
+     // title: '[Feature] request 1',
+    //  body: 'Feature description',
+   // }
+  //});
+ // expect(newIssue.ok()).toBeTruthy();
+
+  const issues = await request.get(`http://pokeapi.co/api/v2/pokemon/charmeleon`);
+  //expect(issues.ok()).toBeTruthy();
+  //expect(await issues.json()).toContainEqual(expect.objectContaining({
+   //title: '[Feature] request 1',
+    //body: 'Feature description'
+  //}));
+  await expect(issues).toBeOK();
+});
 
 
 
