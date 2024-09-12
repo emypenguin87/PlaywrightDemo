@@ -34,9 +34,26 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 
 //Your test goes here:
 
+test('I can log into to Swag Labs site', async ({ page }) => {
+  await page.goto('https://saucedemo.com');
 
 
+  //HINT Here we are using the "id" attribute of an element to locate it, sometimes you may need to use other attributes eg line 23 uses src
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+  await page.locator('[id="login-button"]').click();
 
+  await expect(page.locator('[id="page_wrapper"]')).toBeVisible();
+
+
+});
+
+test('I can get a pokemon', async ({ request }) => {
+    
+  const issues = await request.get('http://pokeapi.co/api/v2/pokemon/charmeleon', {headers: {'Content-Type':'application/json'}});
+  expect(issues.ok()).toBeTruthy();
+  
+});
 
 
 
