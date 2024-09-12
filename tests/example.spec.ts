@@ -34,7 +34,13 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 
 //Your test goes here:
 
-
+test('Ui test to log in to an application',async ({page})=>{
+  await page.goto('https://saucedemo.com/')
+  await page.locator('[data-test="username"]').fill("standard_user")
+  await page.locator('[data-test="password"]').fill("secret_sauce")
+  await page.locator('[id="login-button"]').click();
+  await expect(page).toHaveTitle("Swag Labs");
+})
 
 
 
