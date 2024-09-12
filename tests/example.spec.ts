@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, defineConfig } from '@playwright/test';
 
 test('has title', async ({ page }) => {
   await page.goto('https://playwright.dev/');
@@ -33,8 +33,62 @@ test('I can log into to Applitools demo site', async ({ page }) => {
 });
 
 //Your test goes here:
+test('Login in', async ({ page }) => {
+  await page.goto('https://saucedemo.com');
+
+  await page.locator('[id="user-name"]').fill("standard_user");
+  await page.locator('[id="password"]').fill("secret_sauce");
+
+  await page.locator('[id="login-button"]').click();
+
+  await page.goto('https://www.saucedemo.com/inventory.html');
+  
+});
+
+//Your test goes here:
+test('Invalid Login in', async ({ page }) => {
+  await page.goto('https://saucedemo.com');
+
+  await page.locator('[id="user-name"]').fill("locked_out_user");
+  await page.locator('[id="password"]').fill("x");
+
+  await page.locator('[id="login-button"]').click();
+
+  await expect(page.locator("data-test=error")).toBe("Epic sadface: Username and password do not match any user in this service");
+  
+});
 
 
+let apiContext;
+
+test.beforeAll(async ({ playwright }) => {
+  apiContext = await playwright.request.newContext({
+    baseURL: 'https://pokeapi.co/api/v2/pokemon/charmeleon',
+    extraHTTPHeaders: {
+      'Content-Type': 'application/json',
+    },
+  });
+});
+
+test.afterAll(async ({ }) => {
+  // Dispose all responses.
+  await apiContext.dispose();
+});
+
+test('Pokiemon Api', async ({request}) => {
+  // const res = await request.get("https://pokeapi.co/api/v2/pokemon/charmeleon", {
+  //     headers: {
+  //         'Content-Type': 'application/json'
+  //     }
+  // });
+  // const data = await res.json();
+
+  const newIssue = await apiContext.get(`https://pokeapi.co/api/v2/pokemon/charmeleon`);
+  
+
+
+
+})
 
 
 
